@@ -1,10 +1,12 @@
 // json object
 
 // ====== Exercise 3.5 ===== basic structure
-
+let api_key = process.env.API_KEY_OMDB
+let url = `http://www.omdbapi.com/?apikey=${api_key}&t=starwars&y=2016`
 let xhr = new XMLHttpRequest()
-xhr.open('GET', 'data.json', 'true');
+xhr.open('GET', url, 'true');
 xhr.responseType = 'text'; // ensure data format
+xhr.send() // make he request
 
 xhr.onload = () => { // asycnc call back
   if (xhr.status === 200) { // ensre success
@@ -14,7 +16,7 @@ xhr.onload = () => { // asycnc call back
   }
 }
 
-xhr.send() // make he request
+
 
 // ===== Exercise 3: AJAX =====
 
