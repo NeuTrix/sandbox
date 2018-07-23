@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/NeuTrix/sandbox#readme",
   "dependencies": {
-    "chalk": "^2.4.1"
+    "chai": "^4.1.2",
+    "chalk": "^2.4.1",
+    "mocha": "^5.2.0"
   }
 }
