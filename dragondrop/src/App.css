@@ -30,36 +30,59 @@
 /* ==== Grid ==== */
 .grid {
   display: grid;
-  grid-template-areas: "A B C";
+  grid-template-areas: "wip view done" ;
   grid-template-columns: repeat(3, 1fr);
   place-items: center;
-  background-color: greenyellow;
+  background-color: aliceblue;
+  height: 500px;
+  outline: 2px solid orangered
+
 }
 
 .box {
   height: 100px;
   width: 75px;
-}
-
-.box:nth-child(odd) {
-  background-color: lightcyan;
-}
-
-.box:nth-child(even){
+  font-size: 3em;
   background-color: yellowgreen;
+  outline: 2px solid white;
 }
 
-#left {
-  grid-area: A;
-  background-color: tomato;
-}
-
-#middle {
-  grid-area: B;
-  background-color: orange;
-}
-
-#right {
-  grid-area: C;
+.column {
+  width: 200px;
+  display: grid;
+  place-content: center;
   background-color: cyan;
+}
+
+.title {
+  font-size: 2em;
+  color: tomato;
+  height: 2em;
+}
+.draggable {
+  height: 100px;
+  width: 75px;
+  font-size: 3em;
+  background-color: tomato;
+  outline: 2px solid white;
+}
+
+#wip {
+  grid-area: wip;
+
+}
+
+#view {
+  grid-area: view;
+}
+
+#done {
+  grid-area: done;
+}
+
+#drop {
+  grid-area: B;
+  background-color: lightgrey;
+   height: 100px;
+   width: 675px;
 }
