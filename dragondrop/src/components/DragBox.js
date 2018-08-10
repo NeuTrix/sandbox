@@ -95,7 +95,6 @@ class DragBox extends Component {
           handleDrop = {this.handleDrop}
         />
 
-
         <div className = 'title' id= 'view'> <h2> Phantom ZOne! </h2> </div>
         <div className = 'title' id= 't2'> <h2> Done! </h2> </div>
 
