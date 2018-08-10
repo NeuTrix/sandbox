@@ -1,9 +1,23 @@
 import React, { Component } from 'react';
 import '../App.css'
 
+const Col = (props) => {
+  return (
+    < div
+      className = 'column'
+      id = {props.id}
+      onDragOver = { props.handleDragOver }
+      onDrop = { props.handleDrop } 
+    >
+      <span className = 'title'> <h2> { props.id } </h2> </span>
+      { props.tasks[props.id] }
+    </div>
+  )
+}
+
 class DragBox extends Component {
   constructor (props) {
-    super(props)
+    super (props)
     this.state = {
       taskList: [
         { id: '0', category: 'wip', title: 'first' , status: 'pending'},
@@ -18,39 +32,34 @@ class DragBox extends Component {
   }
 
   handleDrag(event) {
-    let id = event.target.id
-    event.dataTransfer.setData('id', id)
-    // event.dataTransfer.effectAllowed = 'move';
-    console.log(`Dragging ${id}, B!`)
-    // return alert("Wuzzup!")
+    let item = event.target
+    event.dataTransfer.setData('id', item.id)
+    event.dataTransfer.setData('parent_id', item.parentNode.id)
   }
 
   handleDragOver (event) {
     event.preventDefault();
-    console.log('daraggging fool!')
   }
 
   handleDrop(event) {
     event.preventDefault();
-    // let id = event.target.id;
+    console.log('==>', event.target.className)
+    let type = event.target.className;
     let id = event.dataTransfer.getData('id')
+    let parent_id = event.dataTransfer.getData('parent_id')
+    console.log(`===> sup! ${id} AND ${parent_id}`)
     let tasks = this.state.taskList.filter (item => {
-      console.log(`==> need itemId of ${item.id} to match ${id}  `)
-      if (item.id === id) {
-        console.log(`Found it!`)
-        item.category === 'comp' 
-          ? item.category = 'wip'
-          : item.category = 'comp' 
+      if (item.id === id && type === 'column') {
+        item.category === 'wip'
+          ? item.category = 'comp'
+          : item.category = 'wip' 
       }
       return item
-    } )
+    })
 
     this.setState({
       ...this.state, tasks
     })
-    // console.log(this.state.taskList)
-    console.log(`Dropped item with id:${id} `);
-    console.log(` ${this.state.taskList[0].category}`)
   }
   
   render () {
@@ -62,53 +71,43 @@ class DragBox extends Component {
     this.state.taskList.forEach ( (item) => {
      tasks[item.category].push(
        <div
-        key= {item.id}
-        onDragStart= {this.handleDrag}
+        key = {item.id}
+        className = 'box'
+        id = {item.id}
         draggable = 'true'
-        className= 'box'
-        title= {item.title}
-        id= {item.id}
+        onDragStart = {this.handleDrag}
+        title = {item.title}
       >
         {item.title}
       </div>
-
      )
     })
 
     return (
-      <div className= 'grid' >
+      <div className = 'grid' >
+        <Col 
+          id = 'wip'
+          tasks = {tasks}
+          handleDragOver = {this.handleDragOver}
+          handleDrop = {this.handleDrop}
+        />
 
-        < div
-        className = 'column'
-        id = 'wip'
-        title = "WIP"
-        onDragOver = {
-          this.handleDragOver
-        }
-        onDrop = {
-            this.handleDrop
-          } >
-          <span className= 'title'> <h2> WIP </h2> </span>
+        <div id='view'>
+        {tasks.wip[0]}
+        </div>
+
+        <Col 
+          id = 'comp'
+          tasks = {tasks}
+          handleDragOver = {this.handleDragOver}
+          handleDrop =  {this.handleDrop}
+        />
           
-          {tasks.wip}
-        </div>
-
-        <div id='view'> </div>
-
-        <div 
-          className= 'column' 
-          id='done' 
-          title= "Done" 
-          onDragOver = {this.handleDragOver}
-          onDrop = {this.handleDrop}
-        >
-          <span className= 'title' > <h2> COMP </h2> </span >
-          {tasks.comp}
-        </div>
-
       </div>
     )
   }
 }
 
 export default DragBox
+
+// work on setting drop fn based on parent element id or title
