@@ -32,9 +32,7 @@ const Col = (props) => {
       <div className= 'title' >
         {props.title}
       </div>
-      <Drags id='left'   val= 'L'/> 
-      <Drags id='middle' val= 'M'/>
-      <Drags id='right'  val= 'R'/>
+      
     </div>
   )
 }
@@ -43,7 +41,7 @@ class DragBox extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      tasksList: [
+      taskList: [
         { category: 'wip', title: 'first' , status: 'pending'},
         { category: 'wip', title: 'second' , status: 'pending'},
         { category: 'wip', title: 'third' , status: 'pending'},
@@ -53,16 +51,16 @@ class DragBox extends Component {
   }
 
   render () {
-    let task = {
+    let tasks = {
       wip: [],
       comp: []
     }
 
-    this.state.tasksList.forEach ( item => {
-     task[item.category].push(
+    this.state.taskList.forEach ( (item) => {
+     tasks[item.category].push(
        <div
         key= {item.title}
-        className= 'draggable'
+        className= 'box'
         title= {item.title}
       >
         {item.title}
@@ -72,12 +70,18 @@ class DragBox extends Component {
     })
 
     return (
-    <div className= 'grid' >
-      <Col id='wip' title= "WIP" />
-      <div id='view'/>
-      <Col id= 'done' title= "Done" />
-    </div>
-  )
+      <div className= 'grid' >
+        <div id='wip' title= "WIP">
+          <span> <h2> WIP </h2> </span>
+          {tasks.wip}
+        </div>
+        <div id='view'/>
+        <div id='done' title= "Done">
+          <span> <h2> COMP </h2> </span>
+          {tasks.comp}
+        </div>
+      </div>
+    )
   }
 }
 

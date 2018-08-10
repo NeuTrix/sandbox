@@ -42,7 +42,7 @@
 .box {
   height: 100px;
   width: 75px;
-  font-size: 3em;
+  font-size: 1.5em;
   background-color: yellowgreen;
   outline: 2px solid white;
 }
