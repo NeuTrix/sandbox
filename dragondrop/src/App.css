@@ -40,14 +40,15 @@
 }
 
 .box {
-  height: 100px;
-  width: 75px;
+   height: 100px;
+   width: 100px;
   font-size: 1.5em;
   background-color: yellowgreen;
   outline: 2px solid white;
 }
 
 .column {
+  height: 500px;
   width: 200px;
   display: grid;
   place-content: center;
@@ -57,11 +58,11 @@
 .title {
   font-size: 2em;
   color: tomato;
-  height: 2em;
+
 }
 .draggable {
-  height: 100px;
-  width: 75px;
+  height: 50px;
+  width: 50px;
   font-size: 3em;
   background-color: tomato;
   outline: 2px solid white;
