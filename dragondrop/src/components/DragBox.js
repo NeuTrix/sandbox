@@ -37,8 +37,10 @@ class DragBox extends Component {
     let tasks = this.state.taskList.filter (item => {
       console.log(`==> need itemId of ${item.id} to match ${id}  `)
       if (item.id === id) {
-        console.log(`Found it! `)
-        item.category = 'comp';
+        console.log(`Found it!`)
+        item.category === 'comp' 
+          ? item.category = 'wip'
+          : item.category = 'comp' 
       }
       return item
     } )
@@ -76,7 +78,16 @@ class DragBox extends Component {
     return (
       <div className= 'grid' >
 
-        <div className= 'column' id='wip' title= "WIP">
+        < div
+        className = 'column'
+        id = 'wip'
+        title = "WIP"
+        onDragOver = {
+          this.handleDragOver
+        }
+        onDrop = {
+            this.handleDrop
+          } >
           <span className= 'title'> <h2> WIP </h2> </span>
           
           {tasks.wip}
