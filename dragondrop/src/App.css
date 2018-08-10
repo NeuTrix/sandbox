@@ -30,19 +30,21 @@
 /* ==== Grid ==== */
 .grid {
   display: grid;
-  grid-template-areas: "wip view done" ;
+  grid-template-areas: 
+    " t1  view  t2 "
+    " wip  view  done " ;
   grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr 6fr;
   place-items: center;
   background-color: aliceblue;
-  height: 500px;
   outline: 2px solid orangered
-
 }
 
 .box {
-   height: 100px;
-   width: 100px;
-  font-size: 1.5em;
+   height: 75px;
+   width: 75px;
+  font-size: 1.0em;
+  margin-top: 10px;
   background-color: yellowgreen;
   outline: 2px solid white;
 }
@@ -56,16 +58,22 @@
 }
 
 .title {
-  font-size: 2em;
+  font-size: 1.0em;
   color: tomato;
-
 }
+
 .draggable {
   height: 50px;
   width: 50px;
   font-size: 3em;
   background-color: tomato;
   outline: 2px solid white;
+}
+
+#t1 {
+  /* display: grid; */
+  grid-area: t1;
+  height: 3em;
 }
 
 #wip {

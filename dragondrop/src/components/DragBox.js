@@ -4,13 +4,13 @@ import '../App.css'
 const Col = (props) => {
   return (
     < div
-      className = 'column'
       id = {props.id}
+      className = 'column'
+      title = {props.title}
       onDragOver = { props.handleDragOver }
       onDrop = { props.handleDrop } 
     >
-      <span className = 'title'> <h2> { props.id } </h2> </span>
-      { props.tasks[props.id] }
+      { props.tasks[props.title] }
     </div>
   )
 }
@@ -20,10 +20,10 @@ class DragBox extends Component {
     super (props)
     this.state = {
       taskList: [
-        { id: '0', category: 'wip', title: 'first' , status: 'pending'},
-        { id: '1', category: 'wip', title: 'second' , status: 'pending'},
-        { id: '2', category: 'wip', title: 'third' , status: 'pending'},
-        { id: '3', category: 'wip', title: 'fourth' , status: 'pending'}
+        { id: '0', status: 'wip', title: 'first' },
+        { id: '1', status: 'wip', title: 'second' },
+        { id: '2', status: 'wip', title: 'third' },
+        { id: '3', status: 'wip', title: 'fourth' }
       ]
     }
     this.handleDrag = this.handleDrag.bind(this);
@@ -34,7 +34,8 @@ class DragBox extends Component {
   handleDrag(event) {
     let item = event.target
     event.dataTransfer.setData('id', item.id)
-    event.dataTransfer.setData('parent_id', item.parentNode.id)
+    event.dataTransfer.setData('parentTitle', item.parentNode.title)
+    console.log('xxx', item.parentNode.title)
   }
 
   handleDragOver (event) {
@@ -43,16 +44,15 @@ class DragBox extends Component {
 
   handleDrop(event) {
     event.preventDefault();
-    console.log('==>', event.target.className)
-    let type = event.target.className;
     let id = event.dataTransfer.getData('id')
-    let parent_id = event.dataTransfer.getData('parent_id')
-    console.log(`===> sup! ${id} AND ${parent_id}`)
+    let parentTitle = event.dataTransfer.getData('parentTitle')
+    let drop = event.target;
     let tasks = this.state.taskList.filter (item => {
-      if (item.id === id && type === 'column') {
-        item.category === 'wip'
-          ? item.category = 'comp'
-          : item.category = 'wip' 
+      console.log('==>', parentTitle,drop.title)
+      if (item.id === id) {
+        if (drop.className === 'column' && drop.title !== parentTitle){
+          item.status === 'wip' ? item.status = 'done' : item.status = 'wip' 
+        }
       }
       return item
     })
@@ -65,11 +65,11 @@ class DragBox extends Component {
   render () {
     let tasks = {
       wip: [],
-      comp: []
+      done: []
     }
     
     this.state.taskList.forEach ( (item) => {
-     tasks[item.category].push(
+     tasks[item.status].push(
        <div
         key = {item.id}
         className = 'box'
@@ -85,19 +85,23 @@ class DragBox extends Component {
 
     return (
       <div className = 'grid' >
+        <div className = 'title' id= 't1'> <h2> WIP </h2> </div>
+      
         <Col 
-          id = 'wip'
+          id ='wip'
+          title = 'wip'
           tasks = {tasks}
           handleDragOver = {this.handleDragOver}
           handleDrop = {this.handleDrop}
         />
 
-        <div id='view'>
-        {tasks.wip[0]}
-        </div>
+
+        <div className = 'title' id= 'view'> <h2> Phantom ZOne! </h2> </div>
+        <div className = 'title' id= 't2'> <h2> Done! </h2> </div>
 
         <Col 
-          id = 'comp'
+          id = 'done'
+          title = 'done'
           tasks = {tasks}
           handleDragOver = {this.handleDragOver}
           handleDrop =  {this.handleDrop}
