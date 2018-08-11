@@ -35,7 +35,7 @@ class DragBox extends Component {
       this.state.tasks.push(
         <div
           key = {item.id}
-          className = 'box'
+          className = 'task'
           id = {item.id}
           draggable = 'true'
           onDragStart = {this.handleDragStart}
@@ -47,8 +47,10 @@ class DragBox extends Component {
     })
   }
 
-  // fn to rearrange arr based on target and source indices, 
-  rearrange(arr, src, tgt) {
+  // fn to rearrange arr based on target & source indices, 
+  // returns a new array
+  // index of source, target, and array as params
+  dropReorder(src, tgt, arr) { 
     // ensure the swap is within range
     if (tgt > arr.length) {
       return -1
@@ -72,7 +74,6 @@ class DragBox extends Component {
     }
     event.dataTransfer.setData('id', item.id)
     event.dataTransfer.setData('parent', item.parentNode.title)
-    // console.log(` Index: ${item} , Item: `, item)
   }
   // while dragging...
   handleDragOver (event) {
@@ -90,15 +91,25 @@ class DragBox extends Component {
         dropIndex = i;
       }
     }
+    let dropType = drop.className;
 
-    let dragId = event.dataTransfer.getData('id')
-    let parent = event.dataTransfer.getData('parent')
+    let dragId = event.dataTransfer.getData('id');
+    let parent = event.dataTransfer.getData('parent');
     // convert index from string to int '+'
-    let dragIndex = +event.dataTransfer.getData('index')
-
-    console.log(`===> parent: ${parent}, drag id: ${dragId}, dragindex: ${dragIndex}, dropIndex: ${dropIndex} `)
-
-
+    let dragIndex = +event.dataTransfer.getData('index');
+    // ensure target is a 'task'
+    if (dropType === 'task') {
+      console.log(`SUCCESS!!! ===> parent: ${parent}, drag id: ${dragId}, dragindex: ${dragIndex}, dropIndex: ${dropIndex} Type: ${dropType} `)
+      // run the 'dropReorder' function
+      let newList = this.dropReorder(dragIndex, dropIndex, tasks)
+      console.log(newList)
+      // set the state to the new array value
+      this.setState({
+        tasks: newList
+      })
+    } else {
+      alert('Error: Can only drop onto another task')
+    }
   }
   
   render () {
@@ -118,7 +129,7 @@ class DragBox extends Component {
           handleDragOver = {this.handleDragOver}
           handleDrop = {this.handleDrop}
         />
-
+  
       </div>
     )
   }
