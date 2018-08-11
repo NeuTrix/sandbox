@@ -20,10 +20,10 @@ class DragBox extends Component {
     super (props)
     this.state = {
       data: [
-        { id: '0', status: 'wip', title: 'first' },
         { id: '1', status: 'wip', title: 'second' },
         { id: '2', status: 'wip', title: 'third' },
-        { id: '3', status: 'wip', title: 'fourth' }
+        { id: '3', status: 'wip', title: 'fourth' },
+        { id: '0', status: 'wip', title: 'first' }
       ],
       tasks: []
     }
@@ -47,20 +47,8 @@ class DragBox extends Component {
     })
   }
 
-  handleDragStart(event) {
-    const { tasks } = this.state
-    let id = event.target.id
-    console.log(tasks)    
-
-    // event.dataTransfer.setData('id',id)
-    // event.dataTransfer.setData('index',id)
-    // event.dataTransfer.setData('parentTitle',event.target.parentNode.title)
-
-    // console.log('drag event.target: ', event.target)
-  }
-  // rearrange an arrary based on target and source indices, 
-  // returns a new array
-  rearrange (arr, src, tgt) {
+  // fn to rearrange arr based on target and source indices, 
+  rearrange(arr, src, tgt) {
     // ensure the swap is within range
     if (tgt > arr.length) {
       return -1
@@ -72,43 +60,49 @@ class DragBox extends Component {
     // return the new array
     return front.concat(end)
   }
-
+  // handle the initial drag event
+  handleDragStart(event) {
+    const { tasks } = this.state
+    let item = event.target;
+    // find the array index of the task in state
+    for (let i = 0; i < tasks.length; i++) {
+      if (tasks[i].props.id === item.id) {
+        event.dataTransfer.setData('index',i)
+      }
+    }
+    event.dataTransfer.setData('id', item.id)
+    event.dataTransfer.setData('parent', item.parentNode.title)
+    // console.log(` Index: ${item} , Item: `, item)
+  }
+  // while dragging...
   handleDragOver (event) {
     event.preventDefault();
-    
   }
-
+  // handle the drop event
   handleDrop(event,arr) {
     event.preventDefault();
-    // let id = event.dataTransfer.getData('id')
-    // let test = this.state.tasks;
-    // let parentTitle = event.dataTransfer.getData('parentTitle')
-    // let drop = event.target;
-    // let item = event.target
-    
-    // console.log('***> Id: ', test.indexOf(id))
+    const { tasks } = this.state
+    let drop = event.target;
+    let dropIndex = null;
+    // find the array index of the task in state
+    for (let i = 0; i < tasks.length; i++) {
+      if (tasks[i].props.id === drop.id) {
+        dropIndex = i;
+      }
+    }
 
-    // let tasks = this.state.data.filter (item => {
-    //   console.log('==>', parentTitle,drop.title)
-    //   if (item.id === id) {
-    //     if (drop.className === 'column' && drop.title !== parentTitle){
-    //       item.status === 'wip' ? item.status = 'done' : item.status = 'wip' 
-    //     }
-    //   }
+    let dragId = event.dataTransfer.getData('id')
+    let parent = event.dataTransfer.getData('parent')
+    // convert index from string to int '+'
+    let dragIndex = +event.dataTransfer.getData('index')
 
-    //   // console.log(arr)
-    //   return item
-    // })
+    console.log(`===> parent: ${parent}, drag id: ${dragId}, dragindex: ${dragIndex}, dropIndex: ${dropIndex} `)
 
-    // this.setState({
-    //   ...this.state, tasks
-    // })
+
   }
   
   render () {
     
-    
-
     return (
       <div className = 'grid' >
         <div className = 'title' id= 't1'> <h2> WIP </h2> </div>
