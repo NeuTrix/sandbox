@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import DragBox from './components/DragBox';
+import DragBoxSort from './components/DragBoxSort';
 
 class App extends Component {
   render() {
@@ -14,6 +15,8 @@ class App extends Component {
         <p className="App-intro">
         </p>
 
+        <DragBoxSort/>
+        
         <DragBox/>
       </div>
     );
