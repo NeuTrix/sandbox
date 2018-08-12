@@ -44,9 +44,20 @@
    height: 50px;
    width: 75px;
   font-size: 1.0em;
-  margin-top: 10px;
+  margin-top: 20px;
   background-color: yellowgreen;
-  outline: 2px solid white;
+  color: darkgreen;
+  outline: 5px solid white;
+}
+
+.box {
+   height: 50px;
+   width: 75px;
+  font-size: 1.0em;
+  margin-top: 20px;
+  background-color: blue;
+  color: white;
+  outline: 5px solid white;
 }
 
 .column {
@@ -54,7 +65,7 @@
   width: 100px;
   display: grid;
   place-content: center;
-  background-color: cyan;
+  background-color: darkslategrey;
 }
 
 .title {

@@ -46,22 +46,25 @@ class DragBox extends Component {
       )
     })
   }
-
-  // fn to rearrange arr based on target & source indices, 
-  // returns a new array
-  // index of source, target, and array as params
-  dropReorder(src, tgt, arr) { 
+  // returns a rearranged array based on drop direction
+  dropReorder(src, tgt, arr) { // indices and the original
     // ensure the swap is within range
     if (tgt > arr.length) {
       return -1
-    }
+    } 
     // set the partitions
     let front = arr.slice(0, src)
     let end = arr.slice(src + 1)
-    front.splice(tgt, 0, arr[src])
-    // return the new array
+    // effect the swaps
+    tgt < src 
+    // when moving FORWARD, target item will move BEHIND of source
+      ? front.splice(tgt, 0, arr[src])
+      // when moving BACKWARD, target item will move AHEAD of source
+      : end.splice(tgt - front.length, 0, arr[src])
+    
     return front.concat(end)
   }
+
   // handle the initial drag event
   handleDragStart(event) {
     const { tasks } = this.state
@@ -93,16 +96,14 @@ class DragBox extends Component {
     }
     let dropType = drop.className;
 
-    let dragId = event.dataTransfer.getData('id');
-    let parent = event.dataTransfer.getData('parent');
+    // let dragId = event.dataTransfer.getData('id');
+    // let parent = event.dataTransfer.getData('parent');
     // convert index from string to int '+'
     let dragIndex = +event.dataTransfer.getData('index');
     // ensure target is a 'task'
     if (dropType === 'task') {
-      console.log(`SUCCESS!!! ===> parent: ${parent}, drag id: ${dragId}, dragindex: ${dragIndex}, dropIndex: ${dropIndex} Type: ${dropType} `)
       // run the 'dropReorder' function
       let newList = this.dropReorder(dragIndex, dropIndex, tasks)
-      console.log(newList)
       // set the state to the new array value
       this.setState({
         tasks: newList
@@ -118,9 +119,9 @@ class DragBox extends Component {
       <div className = 'grid' >
         <div className = 'title' id= 't1'> <h2> WIP </h2> </div>
       
-       <div className = 'title' id= 'view'> 
-        <h2> Swapping within a list too! </h2> 
-       </div>
+        <div className = 'title' id= 'view'> 
+          <h2> Swapping within a list too! </h2> 
+        </div>
 
         <Col 
           id ='wip'

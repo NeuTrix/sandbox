@@ -35,7 +35,6 @@ class DragBox extends Component {
     let item = event.target
     event.dataTransfer.setData('id', item.id)
     event.dataTransfer.setData('parentTitle', item.parentNode.title)
-    console.log('xxx', item.parentNode.title)
   }
 
   handleDragOver (event) {
@@ -48,7 +47,6 @@ class DragBox extends Component {
     let parentTitle = event.dataTransfer.getData('parentTitle')
     let drop = event.target;
     let tasks = this.state.taskList.filter (item => {
-      console.log('==>', parentTitle,drop.title)
       if (item.id === id) {
         if (drop.className === 'column' && drop.title !== parentTitle){
           item.status === 'wip' ? item.status = 'done' : item.status = 'wip' 
