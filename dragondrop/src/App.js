@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import DragBox from './components/DragBox';
 import DragBoxSort from './components/DragBoxSort';
+// import Draggable from './components/Draggable';// doesn't work
 
 class App extends Component {
   render() {
@@ -14,9 +15,7 @@ class App extends Component {
         </header>
         <p className="App-intro">
         </p>
-
         <DragBoxSort/>
-        
         <DragBox/>
       </div>
     );

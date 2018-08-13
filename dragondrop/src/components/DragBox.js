@@ -32,13 +32,15 @@ class DragBox extends Component {
   }
 
   handleDrag(event) {
+    // event.preventDefault();
     let item = event.target
     event.dataTransfer.setData('id', item.id)
     event.dataTransfer.setData('parentTitle', item.parentNode.title)
   }
-
+  
   handleDragOver (event) {
     event.preventDefault();
+    // event.dataTransfer.setData('text', 'please work in FireFox!')
   }
 
   handleDrop(event) {
@@ -67,19 +69,34 @@ class DragBox extends Component {
     }
     
     this.state.taskList.forEach ( (item) => {
-     tasks[item.status].push(
+       let dragon =
        <div
         key = {item.id}
         className = 'box'
         id = {item.id}
         draggable = 'true'
         onDragStart = {this.handleDrag}
+        // onDragStart = {(e) => {
+        //   let item = e.target
+        //   e.dataTransfer.setData('id', item.id)
+        //   e.dataTransfer.setData('parentTitle', item.parentNode.title)
+        // }}
         title = {item.title}
       >
         {item.title}
       </div>
-     )
+     
+     tasks[item.status].push(dragon)
     })
+
+    let boxes = document.getElementsByClassName('box')
+    console.log('--->', boxes)
+    for (let i = 0; i < boxes.length; i += 1) {
+      boxes[i].addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text','null')
+      })
+    }
+    console.log('2--->', boxes)
 
     return (
       <div className = 'grid' >
