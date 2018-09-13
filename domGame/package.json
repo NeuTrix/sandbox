@@ -1,0 +1,15 @@
+{
+  "name": "domgame",
+  "version": "1.0.0",
+  "description": "exercise in DOM manipulation",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -w"
+  },
+  "author": "NeuTrix",
+  "license": "MIT",
+  "dependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0"
+  }
+}
