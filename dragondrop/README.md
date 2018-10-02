@@ -1,7 +1,5 @@
 # Quick demo of drag and drop execution
-
-Simple html exploration of this feature.  
-Wrapped in a create-react-app framework but not react implementation otherwise.
+Simple React based execution of this HTML5 feature.  
 
 ## To implement
 `$ npm start`
